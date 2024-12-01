@@ -5,9 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"sort"
-	"strconv"
-	"strings"
 )
 
 func main() {
@@ -23,30 +20,12 @@ func main() {
 	defer input.Close()
 
 	scanner := bufio.NewScanner(input)
-	var firstList []int
-	var secondList []int
 
-	for scanner.Scan() {
-		line := scanner.Text()
-		results := strings.Split(line, "   ")
-
-		itemone, _ := strconv.Atoi(results[0])
-		itemtwo, err := strconv.Atoi(results[1])
-
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		firstList = append(firstList, itemone)
-		secondList = append(secondList, itemtwo)
-	}
+	firstList, secondList := parseSlices(scanner)
 
 	if err = scanner.Err(); err != nil {
 		fmt.Printf("Error scanning file: %s.\n", err)
 	}
-
-	sort.Ints(firstList)
-	sort.Ints(secondList)
 
 	if part == 1 {
 		answer := partOne(&firstList, &secondList)
