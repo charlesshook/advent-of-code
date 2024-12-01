@@ -1,10 +1,6 @@
 package main
 
-import "sort"
-
 func partTwo(firstList *[]int, secondList *[]int) int {
-	sort.Ints(*firstList)
-	sort.Ints(*secondList)
 	var answer int
 	secondListMap := make(map[int]int)
 
