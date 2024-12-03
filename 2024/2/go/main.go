@@ -13,7 +13,7 @@ func main() {
 	flag.Parse()
 	fmt.Printf("Running challenge part %d.\n", part)
 
-	input, err := os.Open("../test.txt")
+	input, err := os.Open("../input.txt")
 	if err != nil {
 		fmt.Printf("Could not open input.txt file. Error: %s.\n", err)
 	}
