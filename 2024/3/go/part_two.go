@@ -4,38 +4,34 @@ import (
 	"bufio"
 	"regexp"
 	"strconv"
-	"strings"
 )
 
 func partTwo(scanner *bufio.Scanner) int {
 	total := 0
+	allText := ""
 
 	for scanner.Scan() {
-		line := scanner.Text()
-		pattern := regexp.MustCompile("mul\\(\\d{1,3},\\d{1,3}\\)|don't\\(\\)|do\\(\\)")
-		validMatches := pattern.FindAllString(line, -1)
+		allText += scanner.Text()
+	}
 
-		for i := 0; i < len(validMatches); i++ {
-			validMatches[i] = strings.Trim(validMatches[i], "mul()")
-		}
+	pattern := regexp.MustCompile(`mul\((\d{1,3}),(\d{1,3})\)|don't\(\)|do\(\)`)
+	validMatches := pattern.FindAllStringSubmatch(allText, -1)
 
-		dontSeen := false
+	dontSeen := false
 
-		for i := 0; i < len(validMatches); i++ {
-			splitStrings := strings.Split(validMatches[i], ",")
-
-			if splitStrings[0] == "don't" {
+	for _, validMatch := range validMatches {
+		if len(validMatch) > 0 {
+			if validMatch[0] == "don't()" {
 				dontSeen = true
-			} else if splitStrings[0] == "do" {
+			} else if validMatch[0] == "do()" {
 				dontSeen = false
 			} else if !dontSeen {
-				firstValue, _ := strconv.Atoi(splitStrings[0])
-				secondValue, _ := strconv.Atoi(splitStrings[1])
+				firstValue, _ := strconv.Atoi(validMatch[1])
+				secondValue, _ := strconv.Atoi(validMatch[2])
 
 				total += (firstValue * secondValue)
 			}
 		}
-
 	}
 
 	return total
