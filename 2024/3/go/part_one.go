@@ -12,7 +12,7 @@ func partOne(scanner *bufio.Scanner) int {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		pattern := regexp.MustCompile("mul\\(\\d{1,3},\\d{1,3}\\)")
+		pattern := regexp.MustCompile(`mul\(\d{1,3},\d{1,3}\)`)
 		validMatches := pattern.FindAllString(line, -1)
 
 		for i := 0; i < len(validMatches); i++ {
