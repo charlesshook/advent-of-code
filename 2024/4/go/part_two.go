@@ -15,13 +15,13 @@ func partTwo(scanner *bufio.Scanner) int {
 	}
 
 	moves := solve(charArray, words)
-
 	count := 0
 
-	for i := range len(moves) {
-		for j := i + 1; j < len(moves); j++ {
-			if pointsIntersect(moves[i][0], moves[i][1], moves[j][0], moves[j][1]) {
-				fmt.Println(moves[i][0], moves[i][1], moves[j][0], moves[j][1])
+	fmt.Println(moves)
+
+	for i := 0; i < len(moves); i++ {
+		for j := 1; j < len(moves); j++ {
+			if pointsIntersect(moves[i][0], moves[i][2], moves[j][0], moves[j][2]) {
 				count += 1
 			}
 		}
