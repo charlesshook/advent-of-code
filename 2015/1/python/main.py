@@ -14,7 +14,7 @@ def main():
         answer = part_one.partOne(input)
         print("The solution to part 1 is: {answer}.".format(answer = answer))
     elif args.part == 2:
-        answer = part_two.partTwo()
+        answer = part_two.partTwo(input)
         print("The solution to part 2 is: {answer}.".format(answer = answer))
     else:
         print("Part {part} is not a valid option.".format(part = args.part))
