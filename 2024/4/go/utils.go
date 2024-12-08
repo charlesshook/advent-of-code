@@ -61,15 +61,15 @@ func solve(grid [][]rune, words []string) [][]Point {
 		trie.insert(word)
 	}
 
-	Points := []Point{
+	directions := []Point{
 		{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1},
 	}
 
 	for i := range n {
 		for j := range m {
 			if _, ok := trie.root.children[grid[i][j]]; ok {
-				for _, Point := range Points {
-					check(grid, trie.root, i, j, Point.x, Point.y, &moves)
+				for _, direction := range directions {
+					check(grid, trie.root, i, j, direction.x, direction.y, &moves)
 				}
 			}
 		}
@@ -82,20 +82,25 @@ func check(grid [][]rune, trie *Node, i int, j int, xPoint int, yPoint int, move
 	n, m := len(grid), len(grid[0])
 	node := trie
 
-	startingI, startingJ := i, j
+	// startingI, startingJ := i, j
+	pathArray := []Point{}
+	why := ""
 
 	for i >= 0 && i < n && j >= 0 && j < m {
 		char := grid[i][j]
 
 		if nextNode, ok := node.children[char]; ok {
 			node = nextNode
-
-			// just append all the points to make the line
+			why += fmt.Sprintf("(%d, %d)", i, j)
+			pathArray = append(pathArray, Point{i, j})
 
 			if node.isWord {
-				*moves = append(*moves, []Point{{startingI, startingJ}, {i, j}})
+				*moves = append(*moves, pathArray)
+				pathArray = pathArray[:0]
+				why = ""
 			}
 		} else {
+			pathArray = pathArray[:0]
 			break
 		}
 
