@@ -2,26 +2,30 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 )
 
 func partTwo(scanner *bufio.Scanner) int {
 	var charArray [][]rune
-	words := []string{"MAS"}
 
 	for scanner.Scan() {
 		line := scanner.Text()
 		charArray = append(charArray, []rune(line))
 	}
 
-	moves := solve(charArray, words)
 	count := 0
 
-	fmt.Println(moves)
+	height := len(charArray)
+	width := len(charArray[0])
 
-	for i := 0; i < len(moves); i++ {
-		for j := 1; j < len(moves); j++ {
-			if pointsIntersect(moves[i][0], moves[i][2], moves[j][0], moves[j][2]) {
+	for i := 0; i < height; i++ {
+		for j := 0; j < width; j++ {
+			if i+2 < height && j+2 < width && charArray[i][j] == 'M' && charArray[i][j+2] == 'M' && charArray[i+1][j+1] == 'A' && charArray[i+2][j] == 'S' && charArray[i+2][j+2] == 'S' {
+				count += 1
+			} else if i+2 < height && j+2 < width && charArray[i][j] == 'S' && charArray[i][j+2] == 'M' && charArray[i+1][j+1] == 'A' && charArray[i+2][j] == 'S' && charArray[i+2][j+2] == 'M' {
+				count += 1
+			} else if i+2 < height && j+2 < width && charArray[i][j] == 'S' && charArray[i][j+2] == 'S' && charArray[i+1][j+1] == 'A' && charArray[i+2][j] == 'M' && charArray[i+2][j+2] == 'M' {
+				count += 1
+			} else if i+2 < height && j+2 < width && charArray[i][j] == 'M' && charArray[i][j+2] == 'S' && charArray[i+1][j+1] == 'A' && charArray[i+2][j] == 'M' && charArray[i+2][j+2] == 'S' {
 				count += 1
 			}
 		}
